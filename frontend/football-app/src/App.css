@@ -1,13 +1,15 @@
+/* Center the root container for better layout */
 #root {
-  max-width: 1280px;
+  max-width: 1280px; /* Matches Tailwind's max-w-7xl */
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
 
+/* Styling for logos, keeping hover effects */
 .logo {
-  height: 6em;
-  padding: 1.5em;
+  height: 6rem; /* Matches Tailwind's h-24 */
+  padding: 1.5rem; /* Matches Tailwind's p-6 */
   will-change: filter;
   transition: filter 300ms;
 }
@@ -18,6 +20,7 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+/* Keyframe animation for spinning logos */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -27,16 +30,23 @@
   }
 }
 
+/* Prefer-reduced-motion media query for animations */
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
+  .logo.spin {
     animation: logo-spin infinite 20s linear;
   }
 }
 
+/* Card styling for reusability */
 .card {
-  padding: 2em;
+  padding: 2rem; /* Matches Tailwind's p-8 */
+  border-radius: 0.5rem; /* Matches Tailwind's rounded-md */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Matches Tailwind's shadow-md */
+  background-color: #ffffff; /* Matches Tailwind's bg-white */
 }
 
+/* Faded text for secondary information */
 .read-the-docs {
-  color: #888;
+  color: #888; /* Matches Tailwind's text-gray-500 */
+  font-size: 0.875rem; /* Matches Tailwind's text-sm */
 }
