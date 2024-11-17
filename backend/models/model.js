@@ -1,38 +1,42 @@
 const mongoose = require('mongoose');
 
 const dataSchema = new mongoose.Schema({
-  team: {
+  "Team": {
     required: true,
     type: String
   },
-  games_played: {
+  "Games Played": {
     required: true,
     type: Number
   },
-  win: {
+  "Win": {
     required: true,
     type: Number
   },
-  draw: {
+  "Draw": {
     required: true,
     type: Number
   },
-  loss: {
+  "Loss": {
     required: true,
     type: Number
   },
-  goals_for: {
+  "Goals For": {
     required: true,
     type: Number
   },
-  goals_against: {
+  "Goals Against": {
     required: true,
     type: Number
   },
-  points: {
+  "Points": {
+    required: true,
+    type: Number
+  },
+  "Year": {
     required: true,
     type: Number
   }
-}, { collection: 'nodetest' });
+}, { collection: 'test' });
 
 module.exports = mongoose.model('Data', dataSchema);
