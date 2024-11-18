@@ -19,7 +19,18 @@
     color: #1f2937; /* Matches Tailwind's text-gray-800 */
     line-height: 1.5; /* Matches Tailwind's leading-relaxed */
     overflow-x: hidden;
-    margin: 0; /* Ensure no default margin issues */
+    margin: 0;
+    height: 100%; /* Ensure no default margin issues */
+  }
+
+  #root, .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full height of the viewport */
+  }
+
+  .main-content {
+    flex: 1; /* Fills remaining space between header and footer */
   }
 
   /* Global anchor link styles */
@@ -52,5 +63,12 @@
   .form-input {
     @apply px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-400;
     @apply focus:outline-none focus:ring-opacity-50 border-gray-300;
+  }
+
+  footer {
+    @apply bg-gray-200 text-gray-700 text-center p-4;
+    position: relative; /* Allows for stacking other elements if necessary */
+    bottom: 0;
+    width: 100%;
   }
 }

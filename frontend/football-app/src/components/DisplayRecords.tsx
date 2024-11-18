@@ -4,7 +4,7 @@ import axios from 'axios';
 const DisplayRecords = () => {
     interface Record {
         team: string;
-        gamesPlayed: number;
+        games_played: number;
         win: number;
         points: number;
     }
@@ -14,7 +14,7 @@ const DisplayRecords = () => {
     useEffect(() => {
         const fetchRecords = async () => {
             try {
-                const response = await axios.get('/api/records');
+                const response = await axios.get('/api/teams');
                 setRecords(response.data);
             } catch (error) {
                 console.error('Error fetching records', error);
@@ -39,7 +39,7 @@ const DisplayRecords = () => {
                     {records.map((record, index) => (
                         <tr key={index} className="text-center">
                             <td className="border border-gray-300 px-4 py-2">{record.team}</td>
-                            <td className="border border-gray-300 px-4 py-2">{record.gamesPlayed}</td>
+                            <td className="border border-gray-300 px-4 py-2">{record.games_played}</td>
                             <td className="border border-gray-300 px-4 py-2">{record.win}</td>
                             <td className="border border-gray-300 px-4 py-2">{record.points}</td>
                         </tr>

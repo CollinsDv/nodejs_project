@@ -4,12 +4,12 @@ import axios from 'axios';
 const UpdateDataForm = () => {
     const [teamName, setTeamName] = useState('');
     const [formData, setFormData] = useState({
-        gamesPlayed: '',
+        games_played: '',
         win: '',
         draw: '',
         loss: '',
-        goalsFor: '',
-        goalsAgainst: '',
+        goals_for: '',
+        goals_against: '',
         points: '',
         year: '',
     });
@@ -22,7 +22,8 @@ const UpdateDataForm = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/update', { teamName, ...formData });
+            // Change the endpoint URL to '/api/updateByTeam' based on the backend
+            const response = await axios.post('/api/updateByTeam', { team: teamName, ...formData });
             alert('Data updated successfully');
             console.log(response.data);
         } catch (error) {
@@ -47,7 +48,7 @@ const UpdateDataForm = () => {
             </div>
             {Object.keys(formData).map((key) => (
                 <div key={key}>
-                    <label className="block text-gray-700 capitalize">{key}:</label>
+                    <label className="block text-gray-700 capitalize">{key.replace(/_/g, ' ')}:</label>
                     <input
                         type="text"
                         name={key}
@@ -55,7 +56,7 @@ const UpdateDataForm = () => {
                         onChange={handleChange}
                         className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                         title={key}
-                        placeholder={`Enter ${key}`}
+                        placeholder={`Enter ${key.replace(/_/g, ' ')}`}
                     />
                 </div>
             ))}

@@ -1,93 +1,57 @@
-// services/api.ts
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000'; // Your backend API URL
+const BASE_URL = 'http://localhost:3000/api';
 
-// Define types for data that will be sent/received
-export interface FootballData {
-  team: string;
-  gamesPlayed: number;
-  win: number;
-  draw: number;
-  loss: number;
-  goalsFor: number;
-  goalsAgainst: number;
-  points: number;
-  year: number;
-}
-
-// Create Axios instance
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-// Add new football data to the database
-export const addFootballData = async (data: FootballData) => {
-  try {
-    const response = await api.post('/api/football', data);
-    return response.data;
-  } catch (error) {
-    console.error('Error adding data:', error);
-    throw error;
-  }
+// Add Data API
+export const addData = async (teamData: any) => {
+    // Change camelCase to snake_case to match backend
+    const payload = {
+        Team: teamData.team,
+        "Games Played": teamData.gamesPlayed,
+        Win: teamData.win,
+        Draw: teamData.draw,
+        Loss: teamData.loss,
+        "Goals For": teamData.goalsFor,
+        "Goals Against": teamData.goalsAgainst,
+        Points: teamData.points,
+        Year: teamData.year,
+    };
+    return axios.post(`${BASE_URL}/add`, payload);
 };
 
-// Update an existing football team's data by team name
-export const updateFootballData = async (team: string, data: Partial<FootballData>) => {
-  try {
-    const response = await api.post(`/api/football/update/${team}`, data);
-    return response.data;
-  } catch (error) {
-    console.error('Error updating data:', error);
-    throw error;
-  }
+// Update Data API
+export const updateData = async (teamData: any) => {
+    // Change camelCase to snake_case to match backend
+    const payload = {
+        Team: teamData.team,
+        "Games Played": teamData.gamesPlayed,
+        Win: teamData.win,
+        Draw: teamData.draw,
+        Loss: teamData.loss,
+        "Goals For": teamData.goalsFor,
+        "Goals Against": teamData.goalsAgainst,
+        Points: teamData.points,
+        Year: teamData.year,
+    };
+    return axios.post(`${BASE_URL}/updateByTeam`, payload);
 };
 
-// Delete football data by team name
-export const deleteFootballData = async (team: string) => {
-  try {
-    const response = await api.post(`/api/football/delete/${team}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error deleting data:', error);
-    throw error;
-  }
+// Delete Data API
+export const deleteData = async (team: string) => {
+    return axios.delete(`${BASE_URL}/deleteByTeam`, { data: { Team: team } });
 };
 
-// Get total games played, drawn, and won for a given year
-export const getTeamStatsByYear = async (year: number) => {
-  try {
-    const response = await api.get(`/api/football/stats/${year}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching stats:', error);
-    throw error;
-  }
+// Display Stats for a Year
+export const fetchStatsForYear = async (year: string) => {
+    return axios.get(`${BASE_URL}/stats/${year}`);
 };
 
-// Get the first 10 teams where "won" matches are greater than a given number
-export const getTeamsByWins = async (minWins: number) => {
-  try {
-    const response = await api.get(`/api/football/wins/${minWins}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching teams by wins:', error);
-    throw error;
-  }
+// Fetch Teams with Minimum Wins
+export const fetchTeamsByWins = async (minWins: number) => {
+    return axios.get(`${BASE_URL}/teams/wins/${minWins}`);
 };
 
-// Get the average goals scored by teams in a given year
-export const getAverageGoalsByYear = async (year: number) => {
-  try {
-    const response = await api.get(`/api/football/average-goals/${year}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching average goals:', error);
-    throw error;
-  }
+// Fetch Teams with Goals for Average
+export const fetchTeamsByGoalsFor = async (year: string, minGoals: number) => {
+    return axios.get(`${BASE_URL}/teams/goals/${year}/${minGoals}`);
 };
-
-export default api;
