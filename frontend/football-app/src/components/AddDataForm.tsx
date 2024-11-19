@@ -27,7 +27,7 @@ const AddDataForm = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/add', {
+            const response = await axios.post('http://localhost:3000/api/add', {
                 Team: teamData.team,
                 "Games Played": teamData.gamesPlayed,
                 Win: teamData.win,

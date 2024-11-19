@@ -14,7 +14,7 @@ const DisplayRecords = () => {
     useEffect(() => {
         const fetchRecords = async () => {
             try {
-                const response = await axios.get('/api/teams');
+                const response = await axios.get('http://localhost:3000/api/teams');
                 setRecords(response.data);
             } catch (error) {
                 console.error('Error fetching records', error);

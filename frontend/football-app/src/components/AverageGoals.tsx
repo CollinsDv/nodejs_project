@@ -15,7 +15,7 @@ const DisplayRecords = () => {
         const fetchRecords = async () => {
             try {
                 // Assuming the correct backend endpoint is '/api/teams' to fetch all records
-                const response = await axios.get('/api/teams');
+                const response = await axios.get('http://localhost:3000/api/teams');
                 setRecords(response.data);
             } catch (error) {
                 console.error('Error fetching records', error);

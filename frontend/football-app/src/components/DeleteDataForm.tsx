@@ -8,7 +8,7 @@ const DeleteDataForm = () => {
         e.preventDefault();
         try {
             // Make a DELETE request with the team name in the body
-            const response = await axios.delete('/api/deleteByTeam', { data: { Team: teamName } });
+            const response = await axios.delete('http://localhost:3000/api/deleteByTeam', { data: { Team: teamName } });
             
             // Show success message if the request succeeds
             alert(response.data.message || 'Team data deleted successfully!');

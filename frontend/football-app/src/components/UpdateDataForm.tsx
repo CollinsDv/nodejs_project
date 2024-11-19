@@ -23,7 +23,7 @@ const UpdateDataForm = () => {
         e.preventDefault();
         try {
             // Change the endpoint URL to '/api/updateByTeam' based on the backend
-            const response = await axios.post('/api/updateByTeam', { team: teamName, ...formData });
+            const response = await axios.post('http://localhost:3000/api/updateByTeam', { team: teamName, ...formData });
             alert('Data updated successfully');
             console.log(response.data);
         } catch (error) {
