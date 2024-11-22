@@ -5,10 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:3000', // Backend server
-        changeOrigin: true, // Ensures the host header is adjusted for the backend
-      },
-    },
-  },
+      '/api': 'http://localhost:3000'
+    }
+  }
 });

@@ -1,10 +1,13 @@
 const express = require('express');
 const connection = require('./models/connection');
 const Model = require('./models/model');
+const path = require('path');
 
 const app = express();
 
 app.use(express.json()); // Middleware to parse JSON bodies
+// Serve the frontend build files
+app.use(express.static(path.join(__dirname, '../frontend/football-app/dist')));
 
 // Post Method
 app.post('/api/add', async (req, res) => {
