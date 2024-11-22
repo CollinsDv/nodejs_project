@@ -11,19 +11,24 @@ const DisplayRecords = () => {
 
     const [records, setRecords] = useState<Record[]>([]);
     const [minWins, setMinWins] = useState<number>(0); // User input for minimum wins
-    const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false); // Loading state
+    const [error, setError] = useState<string | null>(null); // Error message
 
     useEffect(() => {
         const fetchRecords = async () => {
+            setIsLoading(true);
             try {
                 const response = await axios.get(
                     `http://localhost:3000/api/teams/wins/${minWins}`
                 );
                 setRecords(response.data);
                 setError(null);
-            } catch (error) {
-                console.error('Error fetching records:', error);
+            } catch (err) {
+                console.error('Error fetching records:', err);
                 setError('Failed to fetch records. Please try again.');
+                setRecords([]); // Clear records if an error occurs
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -31,24 +36,35 @@ const DisplayRecords = () => {
     }, [minWins]);
 
     return (
-        <div className="bg-white p-6 rounded shadow-md">
-            <h2 className="text-2xl font-bold">Top 10 Records Based on Wins</h2>
+        <div className="max-w-4xl mx-auto bg-white p-6 rounded shadow-md">
+            <h2 className="text-2xl font-bold text-center">Top 10 Records Based on Wins</h2>
 
+            {/* Input for Minimum Wins */}
             <label className="block mt-4">
-                <span className="text-gray-700">Minimum Wins:</span>
+                <span className="text-gray-700 font-semibold">Minimum Wins:</span>
                 <input
                     type="number"
                     value={minWins}
-                    onChange={(e) => setMinWins(parseInt(e.target.value))}
-                    className="mt-1 block w-full px-3 py-2 border rounded shadow focus:ring focus:ring-blue-500"
+                    onChange={(e) => setMinWins(parseInt(e.target.value) || 0)}
+                    className="mt-2 w-full px-3 py-2 border rounded focus:ring focus:ring-blue-500"
                     placeholder="Enter minimum wins"
+                    min="0"
                 />
             </label>
 
-            {error && <p className="text-red-500 mt-4">{error}</p>}
+            {/* Loading Spinner */}
+            {isLoading && (
+                <p className="text-center text-blue-500 mt-4">Loading records...</p>
+            )}
 
-            {records.length > 0 ? (
-                <table className="min-w-full border-collapse border border-gray-300 mt-4">
+            {/* Error Message */}
+            {error && (
+                <p className="text-center text-red-500 mt-4">{error}</p>
+            )}
+
+            {/* Records Table */}
+            {!isLoading && records.length > 0 ? (
+                <table className="min-w-full mt-6 border-collapse border border-gray-300">
                     <thead>
                         <tr className="bg-gray-200">
                             <th className="border border-gray-300 px-4 py-2">Team</th>
@@ -59,7 +75,10 @@ const DisplayRecords = () => {
                     </thead>
                     <tbody>
                         {records.map((record, index) => (
-                            <tr key={index} className="text-center">
+                            <tr
+                                key={index}
+                                className={`text-center ${index % 2 === 0 ? 'bg-gray-100' : ''}`}
+                            >
                                 <td className="border border-gray-300 px-4 py-2">{record.Team}</td>
                                 <td className="border border-gray-300 px-4 py-2">{record['Games Played']}</td>
                                 <td className="border border-gray-300 px-4 py-2">{record.Win}</td>
@@ -69,7 +88,11 @@ const DisplayRecords = () => {
                     </tbody>
                 </table>
             ) : (
-                <p className="text-center mt-4">No records found.</p>
+                !isLoading && (
+                    <p className="text-center mt-4 text-gray-700">
+                        {minWins > 0 ? 'No records found for the given criteria.' : 'No records available.'}
+                    </p>
+                )
             )}
         </div>
     );
