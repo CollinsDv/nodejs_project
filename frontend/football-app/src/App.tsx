@@ -4,6 +4,7 @@ import UpdateDataForm from './components/UpdateDataForm';
 import DeleteDataForm from './components/DeleteDataForm';
 import DisplayRecords from './components/DisplayRecords';
 import AverageGoals from './components/AverageGoals';
+import TeamStats from './components/TeamStats';  // Import the new TeamStats component
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                     <Link to="/delete" className="px-4 py-2 rounded bg-gray-300 hover:bg-blue-400">Delete Data</Link>
                     <Link to="/display" className="px-4 py-2 rounded bg-gray-300 hover:bg-blue-400">Display Records</Link>
                     <Link to="/average" className="px-4 py-2 rounded bg-gray-300 hover:bg-blue-400">Average Goals</Link>
+                    <Link to="/team-stats" className="px-4 py-2 rounded bg-gray-300 hover:bg-blue-400">Team Stats</Link> {/* New Link */}
                 </nav>
 
                 <main className="mt-8 px-4 py-4 bg-white shadow-md rounded-lg max-w-4xl mx-auto">
@@ -28,6 +30,7 @@ function App() {
                         <Route path="/delete" element={<DeleteDataForm />} />
                         <Route path="/display" element={<DisplayRecords />} />
                         <Route path="/average" element={<AverageGoals />} />
+                        <Route path="/team-stats" element={<TeamStats />} /> {/* New Route */}
                     </Routes>
                 </main>
 

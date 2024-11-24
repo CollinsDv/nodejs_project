@@ -33,6 +33,37 @@ app.post('/api/add', async (req, res) => {
   }
 });
 
+// Get stats for a given team
+app.get('/api/team/stats/:team', async (req, res) => {
+  const { team } = req.params;
+
+  if (!team) {
+    return res.status(400).json({ message: 'Team parameter is required' });
+  }
+
+  try {
+    const stats = await Model.aggregate([
+      { $match: { "Team": team } },
+      {
+        $group: {
+          _id: "$Team",
+          total_games_played: { $sum: "$Games Played" },
+          total_draws: { $sum: "$Draw" },
+          total_wins: { $sum: "$Win" }
+        }
+      }
+    ]);
+
+    if (stats.length > 0) {
+      res.status(200).json(stats[0]);
+    } else {
+      res.status(404).json({ message: 'No data found for the given team' });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 // Update by Team Method
 app.post('/api/updateByTeam', async (req, res) => {
   const { Team, "Games Played": gamesPlayed, Win, Draw, Loss, "Goals For": goalsFor, "Goals Against": goalsAgainst, Points, Year } = req.body;
